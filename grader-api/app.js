@@ -1,5 +1,66 @@
 import { serve } from "./deps.js";
 import { grade } from "./services/gradingService.js";
+import { createClient } from "npm:redis@4.6.4";
+
+const consumer = createClient({
+  url: "redis://redis:6379",
+  pingInterval: 1000,
+  
+});
+
+//const producer = consumer.duplicate();
+
+//await producer.connect();
+
+
+await consumer.connect();
+await consumer.on("error", function(error) {
+  console.error(error);
+});
+
+const handleMessage = async (message, channel) => {
+    const submission = JSON.parse(message);
+    const code = submission.code;
+    const testCode = submission.test_code;
+    const subId = submission.id;
+    const pasId = submission.id;
+    const userUuid = submission.user_uuid
+
+    console.log("start grading....\n");
+    console.log(`code: ${code}`);
+    console.log(`test_code: ${testCode} \n`);
+
+    const result = await grade(code, testCode);
+
+    console.log("sending results");
+    await fetch(`http://nginx:7800/api/submission/${subId}`, {
+      method: "PUT",
+      body: JSON.stringify({result}),
+    });
+
+    /*
+    const resultRows = result.split("\n");
+    console.log("Test results:\n")
+    resultRows.forEach( (row) => console.log(`${row}\n`));
+    */
+    //console.log(`result: ${JSON.stringify(result)}`);
+
+
+}
+
+await consumer.subscribe(
+  "submissionsToBeGraded", handleMessage);
+
+//consumer.subscribe("submissionsToBeGraded");
+
+
+
+
+
+
+
+
+
 
 let state = -1;
 
