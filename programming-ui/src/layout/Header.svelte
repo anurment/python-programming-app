@@ -1,5 +1,5 @@
 <script>
-  import { userUuid } from "../stores/stores.js";
+  import { userUuid } from "../stores/uuidStores.js";
 </script>
 
 <nav class="p-4 mb-4 shadow">

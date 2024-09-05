@@ -37,16 +37,7 @@ const handleMessage = async (message, channel) => {
       method: "PUT",
       body: JSON.stringify({result}),
     });
-
-    /*
-    const resultRows = result.split("\n");
-    console.log("Test results:\n")
-    resultRows.forEach( (row) => console.log(`${row}\n`));
-    */
-    //console.log(`result: ${JSON.stringify(result)}`);
-
-
-}
+};
 
 await consumer.subscribe(
   "submissionsToBeGraded", handleMessage);

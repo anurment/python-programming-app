@@ -27,6 +27,8 @@ services:
       - redis
     env_file:
       - project.env
+    deploy:
+      replicas: 2
 
   programming-ui:
     build: programming-ui

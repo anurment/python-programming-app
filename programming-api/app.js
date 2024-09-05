@@ -1,5 +1,4 @@
 import * as programmingAssignmentService from "./services/programmingAssignmentService.js";
-import * as gradingService from "./services/gradingService.js";
 import { serve } from "./deps.js";
 import { cacheMethodCalls } from "./util/cacheUtil.js";
 import { createClient } from "npm:redis@4.6.4";

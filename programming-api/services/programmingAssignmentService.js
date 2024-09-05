@@ -20,7 +20,7 @@ const findAllPass = async () => {
 
 const findNextPas = async (userUuid) => {
   //TODO RETURNING ALL UNDONE
-  
+  /*
   const result = await sql`
     SELECT * FROM programming_assignments
     WHERE id
@@ -34,6 +34,38 @@ const findNextPas = async (userUuid) => {
     LIMIT 1`;
 
     return result;
+  */
+  const result = await sql`
+    WITH user_submissions AS (
+        SELECT 
+            programming_assignment_id, 
+            correct
+        FROM 
+            programming_assignment_submissions 
+        WHERE 
+            user_uuid = ${userUuid}
+            AND status = 'processed'
+      )
+      SELECT 
+        pa.id, 
+        pa.title, 
+        pa.assignment_order, 
+        pa.handout, 
+        pa.test_code
+      FROM 
+        programming_assignments pa
+      LEFT JOIN 
+        user_submissions us 
+        ON pa.id = us.programming_assignment_id
+      WHERE 
+        us.programming_assignment_id IS NULL  -- User has never submitted this assignment
+        OR (us.correct = FALSE)               -- User submitted but did not pass
+      ORDER BY 
+        pa.assignment_order ASC;`
+
+
+  return result;
+
 };
 
 const addSubmission = async (pasId, code, uuid) => {
