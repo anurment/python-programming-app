@@ -86,7 +86,6 @@
 
 </script>
 
-
 <h3 class="text-md font-bold text-black mb-6">Hello {$userUuid}!</h3>
 <h1 class="text-2xl font-bold text-white mb-6">Python Programming Assignment</h1>
 

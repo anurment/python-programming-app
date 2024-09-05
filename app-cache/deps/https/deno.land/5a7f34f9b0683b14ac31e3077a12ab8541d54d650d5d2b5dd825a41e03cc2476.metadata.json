@@ -1,34 +1,34 @@
 {
   "headers": {
-    "via": "http/2 edgeproxy-h",
-    "x-frame-options": "DENY",
-    "age": "12597673",
-    "x-amz-cf-id": "nVjOYw-umoRe472nAy30GzdXBVuUaHGQKmQnlk_sL15bzMI9DxG-KA==",
-    "x-amz-server-side-encryption": "AES256",
-    "content-type": "application/javascript",
-    "x-amz-version-id": "iAuY8dxMGET5yrCzYioCmejTNblf9QhI",
-    "vary": "Accept-Encoding, Origin",
     "last-modified": "Thu, 21 Mar 2024 20:52:12 GMT",
-    "etag": "W/\"7b0b08614b2cb688ec9e7f7e89b36ddd\"",
-    "referrer-policy": "strict-origin-when-cross-origin",
+    "vary": "Accept-Encoding, Origin",
     "cache-control": "public, max-age=31536000, immutable",
+    "cross-origin-opener-policy": "same-origin",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "content-type": "application/javascript",
+    "x-amz-cf-id": "kqnOh4fYWmTOjaTYYqcO3Nh8q7LqmdPuj-YxRLaTWb0eA1T-fFiYjw==",
+    "date": "Mon, 12 Aug 2024 11:17:15 GMT",
     "cross-origin-embedder-policy": "same-origin",
-    "cross-origin-resource-policy": "same-origin",
+    "age": "1968780",
+    "server-timing": "fetchSource;dur=12",
+    "via": "http/2 edgeproxy-h",
     "content-security-policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+    "cross-origin-resource-policy": "same-origin",
     "x-amz-cf-pop": "FRA56-P5",
     "x-amz-replication-status": "COMPLETED",
-    "x-content-type-options": "nosniff",
+    "etag": "W/\"7b0b08614b2cb688ec9e7f7e89b36ddd\"",
+    "x-amz-server-side-encryption": "AES256",
+    "x-cache": "Hit from cloudfront",
+    "x-frame-options": "DENY",
+    "access-control-allow-origin": "*",
     "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
     "server": "deno/gcp-europe-west3",
-    "access-control-allow-origin": "*",
-    "x-cache": "Hit from cloudfront",
-    "date": "Fri, 22 Mar 2024 11:43:57 GMT",
-    "server-timing": "fetchSource;dur=12",
-    "cross-origin-opener-policy": "same-origin"
+    "x-amz-version-id": "iAuY8dxMGET5yrCzYioCmejTNblf9QhI",
+    "x-content-type-options": "nosniff"
   },
   "url": "https://deno.land/x/postgresjs@v3.4.4/src/large.js",
   "now": {
-    "secs_since_epoch": 1723705507,
-    "nanos_since_epoch": 901798597
+    "secs_since_epoch": 1725430216,
+    "nanos_since_epoch": 65898948
   }
 }
