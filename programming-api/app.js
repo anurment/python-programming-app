@@ -75,9 +75,6 @@ const handlePostPas = async (request, urlPatternResult) => {
                     },
         });
 
-        
-        //console.log(`returning response to post request`);
-        //return Response.json({id: newSubmission.id});
       }
   }
   console.log('something went wrong')
@@ -102,37 +99,6 @@ const handlePutSub = async (request, urlPatternResult) => {
     return new Response("OK", { status: 200});
     
   }
-  //console.log(request.json())
-  
-  /*
-  const uuid = urlPatternResult.pathname.groups.uuid;
-  const pasId = urlPatternResult.pathname.groups.pasid
-  let pas;
-  try {
-      pas = await request.json();
-  } catch (error) {
-      console.log(error);
-      return new Response("Bad request", { status: 400});
-  }
-  if(pas && pas.code){
-      console.log("pas && pas.code")
-      const oldSubmission = cachedPasService.findSameCode(pasId, pas.code, uuid);
-      if(oldSubmission.length > 0){
-        console.log("found old submission")
-        return Response.json({oldSubmission});
-      } else {
-        const newSubmission = await cachedPasService.addSubmission(pasId, pas.code, uuid);
-        console.log(`added submission ${newSubmission.id}`);
-        const testCode = await cachedPasService.findTestCode(pasId)
-        newSubmission.test_code = testCode;
-        client.publish("submissionsToBeGraded", JSON.stringify(newSubmission));
-
-        //TODO GRADING API CALL
-
-        return new Response("OK", { status: 200});
-      }
-  }
-  */
   console.log('something went wrong')
   return new Response("Bad request", { status: 400});
   
@@ -196,19 +162,6 @@ const urlMapping = [
     pattern: new URLPattern({ pathname: "/submission/:subid"}),
     fn: handleGetSub,
   },
-  /*
-  {
-      method: "GET",
-      pattern: new URLPattern({ pathname: "/todos/:id"}),
-      fn: handleGetTodo,
-  },
-  
-  {
-      method: "DELETE",
-      pattern: new URLPattern({ pathname: "/todos/:id"}),
-      fn: handleDeleteTodos,
-  },
-  */
  
 ];
 
@@ -229,30 +182,6 @@ const handleRequest = async (request) => {
       return new Response(e.stack, { status: 500 })
     }
 };
-
-/*
-const handleRequest = async (request) => {
-  const programmingAssignments = await programmingAssignmentService.findAll();
-
-  const requestData = await request.json();
-  const testCode = programmingAssignments[0]["test_code"];
-  const data = {
-    testCode: testCode,
-    code: requestData.code,
-  };
-
-  const response = await fetch("http://grader-api:7000/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  return response;
-};
-
-*/
 
 const portConfig = { port: 7777, hostname: "0.0.0.0" };
 serve(handleRequest, portConfig);
