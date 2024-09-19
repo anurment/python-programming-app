@@ -52,14 +52,14 @@ services:
       - 7000
 
   database-test:
-    container_name: database-test-server-dab-p1-8148f552-a160-4410-af87-07d05afc01dd
+    container_name: database-test-server
     image: postgres:14.1
     restart: "no"
     env_file:
       - test.env
 
   flyway:
-    image: flyway/flyway:9.11.0-alpine
+    image: flyway/flyway:10.18.0
     depends_on:
       - database-test
     volumes:
@@ -68,15 +68,14 @@ services:
     env_file:
       - test.env
 
-  e2e-playwright:
+  playwright:
     entrypoint: "/bin/true"
-    build: e2e-playwright
-    image: e2e-playwright
+    build: playwright
     network_mode: host
     depends_on:
       - nginx
     volumes:
-      - ./e2e-playwright/tests:/e2e-playwright/tests
+      - ./playwright/tests:/app/tests
   
   redis:
     image: redis:latest

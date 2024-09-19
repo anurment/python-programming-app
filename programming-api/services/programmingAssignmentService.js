@@ -20,7 +20,7 @@ const findAllPass = async () => {
 
 const findNextPas = async (userUuid) => {
   //TODO RETURNING ALL UNDONE
-  /*
+  
   const result = await sql`
     SELECT * FROM programming_assignments
     WHERE id
@@ -34,7 +34,8 @@ const findNextPas = async (userUuid) => {
     LIMIT 1`;
 
     return result;
-  */
+  
+ /*
   const result = await sql`
     WITH user_submissions AS (
         SELECT 
@@ -62,9 +63,10 @@ const findNextPas = async (userUuid) => {
         OR (us.correct = FALSE)               -- User submitted but did not pass
       ORDER BY 
         pa.assignment_order ASC;`
+        */
 
 
-  return result;
+  //return result;
 
 };
 
