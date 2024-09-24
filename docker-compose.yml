@@ -22,13 +22,11 @@ services:
     expose:
       - 7777
     depends_on:
-      - database
+      - database-test
       - flyway
       - redis
     env_file:
-      - project.env
-    deploy:
-      replicas: 2
+      - test.env
 
   programming-ui:
     build: programming-ui
@@ -53,31 +51,31 @@ services:
     expose:
       - 7000
 
-  database:
-    container_name: database-server-dab-p1-8148f552-a160-4410-af87-07d05afc01dd
+  database-test:
+    container_name: database-test-server
     image: postgres:14.1
     restart: "no"
     env_file:
-      - project.env
+      - test.env
 
   flyway:
     image: flyway/flyway:10.18.0
     depends_on:
-      - database
+      - database-test
     volumes:
       - ./flyway/sql/:/flyway/sql
     command: -connectRetries=60 -baselineOnMigrate=true migrate
     env_file:
-      - project.env
+      - test.env
 
   playwright:
     entrypoint: "/bin/true"
-    build: playwright
+    build: e2e-playwright
     network_mode: host
     depends_on:
       - nginx
     volumes:
-      - ./playwright/tests:/app/tests
+      - ./e2e-playwright/tests:/app/tests
   
   redis:
     image: redis:latest

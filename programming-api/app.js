@@ -3,17 +3,14 @@ import { serve } from "./deps.js";
 import { cacheMethodCalls } from "./util/cacheUtil.js";
 import { createClient } from "npm:redis@4.6.4";
 
-
+/*
 const client = createClient({
   url: "redis://redis:6379",
   pingInterval: 1000,
 });
 
 await client.connect();
-
-
-
-
+*/
 const cachedPasService = cacheMethodCalls(programmingAssignmentService, ["addSubmission", "findSubById"]);
 
 const handleGetRoot = async (request) => {
@@ -22,14 +19,14 @@ const handleGetRoot = async (request) => {
 
 
 const handleGetAllPas = async (request) => {
-  console.log("handleGetAllPas")
+  //console.log("handleGetAllPas")
   const allAssingments = await cachedPasService.findAllPass();
   //console.log(allAssingments);
   return Response.json(allAssingments);
 };
 
 const handleGetAllSubs = async (request) => {
-  console.log("handleGetAllSubs")
+  //console.log("handleGetAllSubs")
   const allSubs = await cachedPasService.findAllSubmissions();
   //console.log(allSubs);
   return Response.json(allSubs);
@@ -42,7 +39,7 @@ const handleGetPas = async (request, urlPatternResult) => {
 }
 
 const handlePostPas = async (request, urlPatternResult) => {
-  console.log("starting post handle")
+  //console.log("starting post handle")
   const uuid = urlPatternResult.pathname.groups.uuid;
   const pasId = urlPatternResult.pathname.groups.pasid
   let pas;
@@ -53,22 +50,30 @@ const handlePostPas = async (request, urlPatternResult) => {
       return new Response("Bad request", { status: 400});
   }
   if(pas && pas.code){
-      console.log("pas && pas.code")
+      //console.log("pas && pas.code")
       const oldSubmission = cachedPasService.findSameCode(pasId, pas.code, uuid);
       if(oldSubmission.length > 0){
-        console.log("found old submission")
+        //console.log("found old submission")
         return Response.json({oldSubmission});
       } else {
         const newSubmission = await cachedPasService.addSubmission(pasId, pas.code, uuid);
-        console.log(`added submission ${pasId}`);
+        //console.log(`added submission ${pasId}`);
         const testCode = await cachedPasService.findTestCode(pasId)
-        console.log(`test_code: ${testCode}`)
+        //console.log(`test_code: ${testCode}`)
         const dataToQueue = {...newSubmission, ...testCode};
-        client.publish("submissionsToBeGraded", JSON.stringify(dataToQueue));
+        //client.rPush("submissionsToBeGraded", JSON.stringify(dataToQueue));
+        fetch(`http://grader-api:7000/`, {
+          method: "POST",
+          body: JSON.stringify(dataToQueue),
+        });
+
+        //client.publish("submissionsToBeGraded", JSON.stringify(dataToQueue));
+
+        
 
         //TODO GRADING API CALL
         
-        console.log(`returning id to post request: ${newSubmission.id}`);
+        //console.log(`returning id to post request: ${newSubmission.id}`);
 
         return new Response(JSON.stringify({id: newSubmission.id}), {
           status: 200,
@@ -84,7 +89,7 @@ const handlePostPas = async (request, urlPatternResult) => {
 };
 
 const handlePutSub = async (request, urlPatternResult) => {
-  console.log("starting put handle");
+  //console.log("starting put handle");
   const uuid = urlPatternResult.pathname.groups.uuid;
   const subId = urlPatternResult.pathname.groups.subid;
   let grading;
@@ -96,7 +101,7 @@ const handlePutSub = async (request, urlPatternResult) => {
   }
 
   if (grading && grading.result) {
-    console.log(grading.result);
+    //console.log(grading.result);
     await cachedPasService.updateSubmission(subId, grading.result);
     return new Response("OK", { status: 200});
     
@@ -107,9 +112,9 @@ const handlePutSub = async (request, urlPatternResult) => {
 };
 
 const handleGetSub = async (request, urlPatternResult) => {
-  console.log("starting getSub handle...")
+  //console.log("starting getSub handle...")
   const subId = urlPatternResult.pathname.groups.subid;
-  console.log(`subId for getSub handle: ${subId}`);
+  //console.log(`subId for getSub handle: ${subId}`);
   const sub = await cachedPasService.findSubById(subId);
   //console.log(pas.length)
 

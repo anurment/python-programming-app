@@ -9,6 +9,8 @@ const createGradingContainer = async (code, testCode, randomKey) => {
   const testFileName = `test-${randomKey}.data`;
   await Deno.writeTextFile(testFileName, testCode);
 
+  console.log("info from createGradingContainer")
+
   const graderContainerName = `submission-image-${randomKey}`;
   const tmpGraderContainerName = `${graderContainerName}-tmp`;
 
@@ -74,6 +76,7 @@ const runGradingContainer = async (graderContainerName, randomKey) => {
 const grade = async (code, testCode) => {
 
   const randomKey = Math.floor(Math.random() * 900000000 + 100000000);
+
   const graderContainerName = await createGradingContainer(
     code,
     testCode,
