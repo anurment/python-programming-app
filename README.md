@@ -20,10 +20,10 @@ User is identified with a Universally Unique Identifier (uuid). The assingments 
   
 ### Backend (programming-api)  
   
-    - The backend is a simple deno-application that handles the requests sent from the ui and from the grader-api.  
-    - The app uses a postgresql database for saving the data.  
-    - The database queries are cached to improve performance.  
-    - The solution feedback that is sent from the grader-api is checked for correct or incorrect solution and then saved to the database.  
+- The backend is a simple deno-application that handles the requests sent from the ui and from the grader-api.  
+- The app uses a postgresql database for saving the data.  
+- The database queries are cached to improve performance.  
+- The solution feedback that is sent from the grader-api is checked for correct or incorrect solution and then saved to the database.  
   
 ### grader-api  
   
